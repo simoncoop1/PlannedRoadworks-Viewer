@@ -1,0 +1,15 @@
+{
+  "name": "HE_Planned_Road_Works",
+  "version": "1.0.0",
+  "description": "",
+  "main": "theapp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Simon Cooper",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
