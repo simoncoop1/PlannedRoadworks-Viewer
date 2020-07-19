@@ -7,15 +7,13 @@
         <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
         <script src='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.js'></script>
         <link href='https://api.mapbox.com/mapbox-gl-js/v1.8.0/mapbox-gl.css' rel='stylesheet' />
-        <style>
-            body { margin:0px; padding:0px; }
-            #map { position:absolute; top:0px; bottom:0px; width:100%; }
-         </style>
     </head>
     <body>
-    Hello World
-    
+    Hello World.
     <style>
+        body { margin:0px; padding:0px; }
+        #map { position:absolute; top:0px; bottom:0px; width:100%; }
+
         #markerWithExternalCss {
             background-image: url('my-marker.png');
             background-size: cover;
@@ -25,7 +23,16 @@
             cursor: pointer;
          }
 
+        #over{
+            position: absolute; z-index: 5;
+        }
+
     </style>
+    <div id="over">
+      <select id="fortnight" name="fortnight">
+      <option value="all">Show All</option>
+      <option value="fortnight">+2 week only</option>
+      </select></div>
     <div id='map'></div>
     <script>
             //Add your LocationIQ Maps Access Token here (not the API token!)
@@ -78,15 +85,9 @@
             //Attach to the marker we just created
             markerWithExternalCss2.setPopup(popup2); // sets a popup on this marker
 
+        //keep record of markers
+        currentMarkers=[];
 
-
-      
-
-        </script>
-
-
-
-		<script>
 		//try to load the xml
         function loadPlannedRW(ar){
         $.ajax({
@@ -121,7 +122,7 @@
                         wgs84 = osgb.getWGS84();
 
                         //now work with wgs84.latitude and wgs84.longitude
-                        console.log("Latitude "+ wgs84.latitude + " Longitude "+wgs84.longitude);
+                        //console.log("Latitude "+ wgs84.latitude + " Longitude "+wgs84.longitude);
 
     	                 // Create a popup
                          var therd = $(this).find("ROAD_Collection").find("ROAD").attr("ROAD_NUMBER");
@@ -129,6 +130,24 @@
                          var thestart = $(this).attr("SDATE");
                          var theend = $(this).attr("EDATE");
                          var thedelay = $(this).attr("EXPDEL");
+
+                         //parsing the date
+                         var strt = new Date($(this).attr("SDATE").replace(/-/g,"/"));
+                         var end = new Date($(this).attr("EDATE").replace(/-/g,"/"));
+                         //console.log(datet);
+                         var fortwk = new Date();
+                         fortwk.setDate(fortwk.getDate()+14);
+                         var now = new Date();
+                         //console.log(fortwk,datees);
+                         //console.log(new Date("27-MAY-2020 22:00"));
+                         //console.log(datets);
+                         if($("#fortnight").val()=="fortnight"){
+                            if (strt > fortwk | end < now){
+                                //console.log("we skip");
+                                return;
+                            }
+                         }
+
                          var popup = new mapboxgl.Popup()
                              .setHTML('<b>Road:</b>'+ therd+
                                  '<br> <b>Description:</b>'+thedesc+
@@ -142,6 +161,7 @@
                             .setLngLat([wgs84.longitude,wgs84.latitude])
                             .setPopup(popup)
                             .addTo(map);
+                         currentMarkers.push(markerWithExternalCss);
 
                 });
 
@@ -151,6 +171,27 @@
            }
 
         }
+
+        $( "#fortnight").change(function() {           
+            //alert( "Handler for .change() called." );
+
+            //remove markers and update our maintained list
+            for (s of currentMarkers){
+                s.remove();
+            }
+            currentMarkers.length=0;
+
+            //now load the markers
+            var sel = $(this).val();
+            if(sel == "fortnight"){
+                console.log("load fortnight");
+                loadPlannedRW();
+            }
+            else{
+                console.log("load all");
+                loadPlannedRW();
+            }
+        });
 
         //coors request denies this, use an js library instead, calculatel local.
         function convertco(eastings, northings){
@@ -165,16 +206,6 @@
                                 console.log("longitude "+data['LONGITUDE']+"latitude "+data['LATITUDE']);   
                     }
             });
-
-
-
-
-
-
-
-
-
-
 
 
         }
