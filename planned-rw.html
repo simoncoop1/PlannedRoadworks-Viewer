@@ -35,55 +35,55 @@
       </select></div>
     <div id='map'></div>
     <script>
-            //Add your LocationIQ Maps Access Token here (not the API token!)
-            locationiqKey = 'pk.5dcc7345e3b6b79383e6021a44bed5bb';
-            //Define the map and configure the map's theme
-            var map = new mapboxgl.Map({
-                container: 'map',
-                attributionControl: false, //need this to show a compact attribution icon (i) instead of the whole text
-                style: 'https://tiles.locationiq.com/v2/streets/vector.json?key='+locationiqKey,
-                zoom: 12,
-                center: [-1.45723343, 52.27519523]
-            });
-                        
-            //Two ways to attach the popup to markers
-            //https://www.mapbox.com/mapbox-gl-js/api#popup
-            
-            //1. Add it while creating the marker
-            // Create a popup
-            var popup = new mapboxgl.Popup()
-                .setHTML('<b>Plate Number:</b> SF001<br> <b>Type:</b> Truck');
-            
-            var el = document.createElement('div');
-            el.id = 'markerWithExternalCss';
-            // finally, create the marker
-            var markerWithExternalCss = new mapboxgl.Marker(el)
-                .setLngLat([-1.35346413,52.27398732])
-                .setPopup(popup)
-                .addTo(map);
+        //Add your LocationIQ Maps Access Token here (not the API token!)
+        locationiqKey = 'pk.5dcc7345e3b6b79383e6021a44bed5bb';
+        //Define the map and configure the map's theme
+        var map = new mapboxgl.Map({
+            container: 'map',
+            attributionControl: false, //need this to show a compact attribution icon (i) instead of the whole text
+            style: 'https://tiles.locationiq.com/v2/streets/vector.json?key='+locationiqKey,
+            zoom: 12,
+            center: [-1.45723343, 52.27519523]
+        });
+                    
+        //Two ways to attach the popup to markers
+        //https://www.mapbox.com/mapbox-gl-js/api#popup
         
-            //2. Add it after the marker is created
-            var el = document.createElement('div');
-            el.id = 'markerWithExternalCss';
-            // finally, create the marker
-            var markerWithExternalCss2 = new mapboxgl.Marker(el)
-                .setLngLat([-1.35346413,52.27398732])
-                .setPopup(popup)
-                .addTo(map);
+        //1. Add it while creating the marker
+        // Create a popup
+        var popup = new mapboxgl.Popup()
+            .setHTML('<b>Plate Number:</b> SF001<br> <b>Type:</b> Truck');
         
-            //2. Add it after the marker is created
-            var el = document.createElement('div');
-            el.id = 'markerWithExternalCss';
-            // finally, create the marker
-            var markerWithExternalCss2 = new mapboxgl.Marker(el)
-                .setLngLat([-1.37620926, 52.27866123])
-                .addTo(map);
-            
-            var popup2 = new mapboxgl.Popup()
-                .setHTML('<b>Plate Number:</b> SF002<br> <b>Type:</b> Car');
+        var el = document.createElement('div');
+        el.id = 'markerWithExternalCss';
+        // finally, create the marker
+        var markerWithExternalCss = new mapboxgl.Marker(el)
+            .setLngLat([-1.35346413,52.27398732])
+            .setPopup(popup)
+            .addTo(map);
+    
+        //2. Add it after the marker is created
+        var el = document.createElement('div');
+        el.id = 'markerWithExternalCss';
+        // finally, create the marker
+        var markerWithExternalCss2 = new mapboxgl.Marker(el)
+            .setLngLat([-1.35346413,52.27398732])
+            .setPopup(popup)
+            .addTo(map);
+    
+        //2. Add it after the marker is created
+        var el = document.createElement('div');
+        el.id = 'markerWithExternalCss';
+        // finally, create the marker
+        var markerWithExternalCss2 = new mapboxgl.Marker(el)
+            .setLngLat([-1.37620926, 52.27866123])
+            .addTo(map);
+        
+        var popup2 = new mapboxgl.Popup()
+            .setHTML('<b>Plate Number:</b> SF002<br> <b>Type:</b> Car');
 
-            //Attach to the marker we just created
-            markerWithExternalCss2.setPopup(popup2); // sets a popup on this marker
+        //Attach to the marker we just created
+        markerWithExternalCss2.setPopup(popup2); // sets a popup on this marker
 
         //keep record of markers
         currentMarkers=[];
@@ -138,9 +138,6 @@
                          var fortwk = new Date();
                          fortwk.setDate(fortwk.getDate()+14);
                          var now = new Date();
-                         //console.log(fortwk,datees);
-                         //console.log(new Date("27-MAY-2020 22:00"));
-                         //console.log(datets);
                          if($("#fortnight").val()=="fortnight"){
                             if (strt > fortwk | end < now){
                                 //console.log("we skip");
@@ -169,12 +166,9 @@
            for(var arec of worksitem){
                //console.log(arec);
            }
-
         }
 
         $( "#fortnight").change(function() {           
-            //alert( "Handler for .change() called." );
-
             //remove markers and update our maintained list
             for (s of currentMarkers){
                 s.remove();
@@ -203,7 +197,10 @@
                             method : "BNGtoLatLng"}, 
                     dataType: 'json',
                     success: function (data) {
-                                console.log("longitude "+data['LONGITUDE']+"latitude "+data['LATITUDE']);   
+                                console.log("longitude "
+                                + data['LONGITUDE']
+                                + "latitude "
+                                + data['LATITUDE']);   
                     }
             });
 
@@ -211,8 +208,6 @@
         }
 
         loadPlannedRW("");
-
-
     </script>
     </body>
 </html>
