@@ -19,7 +19,11 @@ download the latest dataset for planned roadworks from gov.uk site. https://data
 node theapp.js
 ```
 
-starts the server with localport 3001, now vavigate to http://localhost:3001/planned-rw.html to use the project.
+starts the server with localport 3001,
+
+## Using viewer
+
+With node server running navigate to http://localhost:3001/planned-rw.html with web browser.
 
 ## Filtering
  It is possible to filter to only Planned roadworks active in next 2 weeks, using the select box on the top left of page.
